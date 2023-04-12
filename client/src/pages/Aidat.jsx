@@ -4,12 +4,6 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import Tablo from "../Components/Tablo";
 
-// const data = [
-//   { aciklama: "2023 Mart Aidati", kategori: "Aidat", odeme: "1 Gun Gecikti", toplam: 50, kalan: 50 },
-//   { aciklama: "2023 Mart Aidati", kategori: "Aidat", odeme: "1 Gun Gecikti", toplam: 50, kalan: 50 },
-//   { aciklama: "2023 Mart Aidati", kategori: "Aidat", odeme: "Odendi", toplam: 50, kalan: 0 },
-// ]
-
 const Aidat = () => {
   const [aidatlar, setAidatlar] = useState([]);
 
