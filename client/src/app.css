@@ -1,0 +1,13 @@
+.app {
+  display: flex;
+  justify-content: center;
+  background-color: #d0f1f1;
+}
+.container {
+  width: 1024px;
+  height: 1024px;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
+}
