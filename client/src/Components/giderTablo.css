@@ -1,0 +1,55 @@
+.giderTablo {
+  display: flex;
+  flex-wrap: wrap;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 90%;
+
+  margin: 0 auto;
+}
+
+.giderTablo h3 {
+  flex-basis: calc(15% - 1px);
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.giderTablo h3:first-child {
+  flex-basis: calc(25% - 1px);
+  text-align: center;
+}
+
+.giderTablo h3:last-child {
+  flex-basis: calc(16% - 1px);
+  text-align: center;
+}
+
+.giderTablo h3:nth-child(odd) {
+  background-color: #ddd;
+}
+
+.giderTablo h3:hover {
+  background-color: #e6e6e6;
+}
+
+.giderTablo h3:not(:first-child) {
+  border-left: 1px solid #c60d0d;
+}
+
+.giderTablo h3:first-child {
+  border-left: 1px solid #c60d0d;
+}
+
+.giderTablo h3:last-child {
+  border-right: 1px solid #c60d0d;
+}
+
+.giderTablo h3:nth-child(5) {
+  text-align: center;
+}
+
+.giderTablo h3:nth-child(n + 6) {
+  text-align: center;
+}

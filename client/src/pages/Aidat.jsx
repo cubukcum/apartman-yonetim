@@ -2,10 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import Tablo from "../Components/Tablo";
+import AidatTablo from "../Components/AidatTablo";
+import "./aidat.css";
 
 const Aidat = () => {
   const [aidatlar, setAidatlar] = useState([]);
+  const basliklar = [
+    "Aciklama",
+    "Duzenlenme Tarihi",
+    "Odeme Durumu",
+    "Tutar",
+    "Hesap",
+  ];
+  const basliklar1 = [
+    {
+      aciklama: "Aciklama",
+      duzenleme: "Duzenlenme Tarihi",
+      odeme: "Odeme Durumu",
+      tutar: "Tutar",
+      hesap: "Hesap",
+    },
+  ];
 
   useEffect(() => {
     (async () => {
@@ -60,7 +77,7 @@ const Aidat = () => {
   });
 
   return (
-    <div className="aidatTablo">
+    <div className="aidatTablo1">
       {/* <table>
         <tr>
           <th>Aciklama</th>
@@ -81,8 +98,11 @@ const Aidat = () => {
           );
         })}
       </table> */}
+      {basliklar1.map((baslik) => (
+        <AidatTablo className="basliklar" props={baslik} />
+      ))}
       {aidatlar.map((aidat) => (
-        <Tablo props={aidat} />
+        <AidatTablo className="aidatTablo" key={aidat.id} props={aidat} />
       ))}
     </div>
   );

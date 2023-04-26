@@ -1,0 +1,28 @@
+.genelBakis {
+  height: 92vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(14, 31, 107);
+}
+.genelBakis h2 {
+  color: aqua;
+}
+.genelBakis div {
+  color: aqua;
+}
+
+.genelBakis .pozitif {
+  color: green;
+}
+.genelBakis .negatif {
+  color: rgb(255, 86, 86);
+}
+.negatif:hover {
+  cursor: none;
+  color: red;
+  text-shadow: 5px 5px 30px;
+}
