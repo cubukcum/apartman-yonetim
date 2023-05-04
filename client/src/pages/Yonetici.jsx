@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "./yonetici.css";
 
 const Yonetici = () => {
+  const n = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
+    } else if (localStorage.getItem("username")) {
+      n("/sakin");
+    } else {
+      n("/login");
+    }
+  });
+
   const [kasa, setKasa] = useState(0);
   const [tahsil, setTahsil] = useState(0);
   const [odenecek, setOdenecek] = useState(0);

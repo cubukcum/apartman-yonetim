@@ -6,6 +6,17 @@ import AidatTablo from "../Components/AidatTablo";
 import "./aidat.css";
 
 const Aidat = () => {
+  const n = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
+    } else if (localStorage.getItem("username")) {
+      n("/sakin");
+    } else {
+      n("/login");
+    }
+  });
+
   const [aidatlar, setAidatlar] = useState([]);
   const basliklar = [
     "Aciklama",
@@ -39,42 +50,6 @@ const Aidat = () => {
       console.log(docs);
     })();
   }, []);
-
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const docSnap = await getDocs(collection(db, "aidatlar"));
-  //     console.log(docSnap);
-  //     docSnap.forEach((doc) => {
-  //       // doc.data() is never undefined for query doc snapshots
-  //       //setAidatlar(doc)
-  //       // liste.push(doc.data());
-  //       setAidatlar(doc.data());
-  //       console.log(doc.id, " => ", doc.data());
-  //     });
-  //     console.log("ilk");
-  //     console.log(aidatlar);
-  //     console.log("son");
-  //   } catch (error) {
-  //     console.log("hatavar");
-  //     console.log(error);
-  //   }
-  // };
-
-  const n = useNavigate();
-
-  useEffect(() => {
-    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
-      console.log("basarili");
-    } else if (localStorage.getItem("username")) {
-      console.log("Sakin Girisi Basarili");
-      n("/sakin");
-    } else {
-      console.log("yanlis yerdesins");
-      n(-1);
-    }
-  });
 
   return (
     <div className="aidatTablo1">
