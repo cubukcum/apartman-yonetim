@@ -7,12 +7,12 @@
   background-color: #b9e7e7;
   width: 100%;
 }
-.loginBaslik {
+.loginContainer.loginBaslik {
   font-size: 20px;
   color: teal;
   margin-bottom: 20px;
 }
-form {
+.loginContainer form {
   display: flex;
   flex-direction: column;
   padding: 50px;
@@ -20,13 +20,13 @@ form {
   width: 200px;
   gap: 20px;
 }
-input {
+.loginContainer input {
   padding: 10px;
   border: none;
   border-bottom: 1px solid gray;
 }
 
-button {
+.loginContainer button {
   padding: 10px;
   border: none;
   background-color: teal;
@@ -34,13 +34,13 @@ button {
   color: white;
 }
 
-p {
+.loginContainer p {
   font-size: 12px;
   color: red;
   text-align: center;
 }
 
-span {
+.loginContainer span {
   font-size: 12px;
   text-align: center;
 }

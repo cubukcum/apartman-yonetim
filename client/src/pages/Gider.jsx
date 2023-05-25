@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import GiderTablo from "../Components/GiderTablo";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import { Space, Table, Tag } from "antd";
+import GiderForm from "../Components/GiderForm";
 
 const Gider = () => {
   const n = useNavigate();
@@ -36,12 +37,44 @@ const Gider = () => {
     })();
   }, []);
 
+  const columns = [
+    {
+      title: "Açıklama",
+      dataIndex: "aciklama",
+      key: "aciklama",
+    },
+    {
+      title: "Düzenleme",
+      dataIndex: "duzenleme",
+      key: "duzenleme",
+    },
+    {
+      title: "Kategori",
+      dataIndex: "kategori",
+      key: "kategori",
+    },
+    {
+      title: "Ödeme",
+      dataIndex: "odeme",
+      key: "odeme",
+    },
+    {
+      title: "Tutar",
+      dataIndex: "tutar",
+      key: "tutar",
+    },
+  ];
+
   return (
-    <div className="giderTablo">
-      {giderler.map((aidat) => (
-        <GiderTablo key={aidat.id} props={aidat} />
-      ))}
-    </div>
+    // <div className="giderTablo">
+    //   {giderler.map((aidat) => (
+    //     <GiderTablo key={aidat.id} props={aidat} />
+    //   ))}
+    // </div>
+    <>
+      <Table dataSource={giderler} columns={columns} />
+      <GiderForm />
+    </>
   );
 };
 

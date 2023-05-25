@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
-import AidatTablo from "../Components/AidatTablo";
-import "./aidat.css";
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+
+import { Space, Table, Tag } from "antd";
+
+const aidatRef = collection(db, "aidatlar");
 
 const Aidat = () => {
   const n = useNavigate();
+  const [formAciklama, setFormAciklama] = useState("");
+  const [formTarih, setFormTarih] = useState("");
+  const [formTutar, setFormTutar] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
@@ -18,13 +23,6 @@ const Aidat = () => {
   });
 
   const [aidatlar, setAidatlar] = useState([]);
-  const basliklar = [
-    "Aciklama",
-    "Duzenlenme Tarihi",
-    "Odeme Durumu",
-    "Tutar",
-    "Hesap",
-  ];
   const basliklar1 = [
     {
       aciklama: "Aciklama",
@@ -46,41 +44,80 @@ const Aidat = () => {
         data.id = doc.id;
         return data;
       });
+      docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
       setAidatlar(docs);
       console.log(docs);
     })();
   }, []);
 
-  return (
-    <div className="aidatTablo1">
-      {/* <table>
-        <tr>
-          <th>Aciklama</th>
-          <th>Duzenlenme Tarihi</th>
-          <th>Odeme</th>
-          <th>Tutar</th>
-          <th>Hesap</th>
-        </tr>
-        {aidatlar.map((val, key) => {
-          return (
-            <tr key={key}>
-              <td>{val.aciklama}</td>
-              <td>{val.duzenleme}</td>
-              <td>{val.odeme}</td>
-              <td>{val.tutar}</td>
-              <td>{val.hesap}</td>
-            </tr>
-          );
-        })}
-      </table> */}
-      {basliklar1.map((baslik) => (
-        <AidatTablo className="basliklar" props={baslik} />
-      ))}
-      {aidatlar.map((aidat) => (
-        <AidatTablo className="aidatTablo" key={aidat.id} props={aidat} />
-      ))}
-    </div>
-  );
+  useEffect(() => {
+    (async () => {
+      const colRef = collection(db, "daireler");
+      const snapshots = await getDocs(colRef);
+      const docs = snapshots.docs.map((doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        return data;
+      });
+      setDaireler(docs);
+    })();
+  }, []);
+
+  const [daireler, setDaireler] = useState([]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    for (let i = 0; i < daireler.length; i++) {
+      const isim = daireler[i].isim;
+      await setDoc(doc(aidatRef), {
+        aciklama: formAciklama,
+        duzenleme: formTarih,
+        hesap: isim,
+        odeme: false,
+        tutar: formTutar,
+      });
+    }
+
+    const colRef = collection(db, "aidatlar");
+    const snapshots = await getDocs(colRef);
+    const docs = snapshots.docs.map((doc) => {
+      const data = doc.data();
+      data.id = doc.id;
+      return data;
+    });
+    docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
+    setAidatlar(docs);
+  };
+
+  const columns = [
+    {
+      title: "Açıklama",
+      dataIndex: "aciklama",
+      key: "aciklama",
+    },
+    {
+      title: "Düzenlenme Tarihi",
+      dataIndex: "duzenleme",
+      key: "duzenleme",
+    },
+    {
+      title: "Durum",
+      dataIndex: "odeme",
+      key: "odeme",
+    },
+    {
+      title: "Tutar",
+      dataIndex: "tutar",
+      key: "tutar",
+    },
+    {
+      title: "Hesap",
+      dataIndex: "hesap",
+      key: "hesap",
+    },
+  ];
+
+  return <Table dataSource={aidatlar} columns={columns} />;
 };
 
 export default Aidat;

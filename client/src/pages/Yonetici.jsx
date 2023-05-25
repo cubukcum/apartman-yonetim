@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "./yonetici.css";
+import PieChart from "../Components/PieChart";
 
 const Yonetici = () => {
   const n = useNavigate();
@@ -79,13 +80,14 @@ const Yonetici = () => {
 
   return (
     <div className="genelBakis">
-      <h2>Genel Bakis</h2>
+      <h2>Genel Bakış</h2>
 
-      <div className="tahsil">Tahsil edilecek toplam tutar {tahsil}</div>
-      <div className="odenecek">Odenecek toplam tutar {odenecek} </div>
+      <div className="tahsil">Tahsil edilecek toplam tutar: {tahsil}</div>
+      <div className="odenecek">Ödenecek toplam tutar: {odenecek} </div>
       <div className={kasa >= 0 ? "pozitif" : "negatif"}>
-        Guncel Kasa Durumu {kasa}
+        Güncel Kasa Durumu: {kasa}
       </div>
+      {/* <PieChart data={{ tahsil, odenecek, kasa }} /> */}
     </div>
   );
 };

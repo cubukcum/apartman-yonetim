@@ -6,6 +6,7 @@ import "./app.css";
 import Yonetici from "./pages/Yonetici";
 import Navbar from "./Components/Navbar";
 import Gider from "./pages/Gider";
+import Hesaplar from "./pages/Hesaplar";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/aidat" element={<Aidat />} />
         <Route path="/gider" element={<Gider />} />
+        <Route path="/hesaplar" element={<Hesaplar />} />
       </Routes>
     </>
   );
