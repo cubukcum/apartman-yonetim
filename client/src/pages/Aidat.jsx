@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import AidatForm from "../Components/AidatForm";
 
 import { Space, Table, Tag } from "antd";
 
@@ -9,9 +10,11 @@ const aidatRef = collection(db, "aidatlar");
 
 const Aidat = () => {
   const n = useNavigate();
-  const [formAciklama, setFormAciklama] = useState("");
-  const [formTarih, setFormTarih] = useState("");
-  const [formTutar, setFormTutar] = useState(0);
+  const [guncelle, setGuncelle] = useState(false);
+
+  const aidatEklendi = () => {
+    setGuncelle((prevGuncelle) => !prevGuncelle);
+  };
 
   useEffect(() => {
     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
@@ -23,15 +26,6 @@ const Aidat = () => {
   });
 
   const [aidatlar, setAidatlar] = useState([]);
-  const basliklar1 = [
-    {
-      aciklama: "Aciklama",
-      duzenleme: "Duzenlenme Tarihi",
-      odeme: "Odeme Durumu",
-      tutar: "Tutar",
-      hesap: "Hesap",
-    },
-  ];
 
   useEffect(() => {
     (async () => {
@@ -44,50 +38,22 @@ const Aidat = () => {
         data.id = doc.id;
         return data;
       });
-      docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
       setAidatlar(docs);
+      setAidatlar((prevAidatlar) =>
+        prevAidatlar.map((aidat) => {
+          const updatedAidat = {
+            ...aidat,
+            duzenleme: new Date(
+              aidat.duzenleme.seconds * 1000
+            ).toLocaleDateString(),
+          };
+          return updatedAidat;
+        })
+      );
+
       console.log(docs);
     })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      const colRef = collection(db, "daireler");
-      const snapshots = await getDocs(colRef);
-      const docs = snapshots.docs.map((doc) => {
-        const data = doc.data();
-        data.id = doc.id;
-        return data;
-      });
-      setDaireler(docs);
-    })();
-  }, []);
-
-  const [daireler, setDaireler] = useState([]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    for (let i = 0; i < daireler.length; i++) {
-      const isim = daireler[i].isim;
-      await setDoc(doc(aidatRef), {
-        aciklama: formAciklama,
-        duzenleme: formTarih,
-        hesap: isim,
-        odeme: false,
-        tutar: formTutar,
-      });
-    }
-
-    const colRef = collection(db, "aidatlar");
-    const snapshots = await getDocs(colRef);
-    const docs = snapshots.docs.map((doc) => {
-      const data = doc.data();
-      data.id = doc.id;
-      return data;
-    });
-    docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
-    setAidatlar(docs);
-  };
+  }, [guncelle]);
 
   const columns = [
     {
@@ -104,6 +70,15 @@ const Aidat = () => {
       title: "Durum",
       dataIndex: "odeme",
       key: "odeme",
+      render: (_, { odeme }) => {
+        let color = odeme ? "green" : "red";
+        let name = odeme ? "ÖDENDİ" : "ÖDENMEDİ";
+        return (
+          <Tag color={color} key={odeme}>
+            {name}
+          </Tag>
+        );
+      },
     },
     {
       title: "Tutar",
@@ -114,10 +89,18 @@ const Aidat = () => {
       title: "Hesap",
       dataIndex: "hesap",
       key: "hesap",
+      sorter: (a, b) => a.hesap.localeCompare(b.hesap),
+      sortDirections: ["ascend", "descend"],
+      showSorterTooltip: false,
     },
   ];
 
-  return <Table dataSource={aidatlar} columns={columns} />;
+  return (
+    <>
+      <Table dataSource={aidatlar} columns={columns} />
+      <AidatForm aidatEklendi={aidatEklendi} />
+    </>
+  );
 };
 
 export default Aidat;

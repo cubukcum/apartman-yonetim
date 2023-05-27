@@ -1,45 +1,64 @@
 import {
   Button,
-  Cascader,
   DatePicker,
   Form,
   Input,
   InputNumber,
-  Radio,
   Select,
   Switch,
-  TreeSelect,
 } from "antd";
 import { useState } from "react";
+import { db } from "../firebaseConfig";
+import { setDoc, doc, collection } from "firebase/firestore";
+
+const giderRef = collection(db, "giderler");
+
 const GiderForm = () => {
   const [componentSize, setComponentSize] = useState("default");
   const [loading, setLoading] = useState(false);
+  const [duzenlemeTarihi, setDuzenlemeTarihi] = useState();
+  const [aciklama, setAciklama] = useState("");
+  const [kategori, setKategori] = useState("");
+  const [tutar, setTutar] = useState("");
+  const [odendi, setOdendi] = useState(false);
+
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
+
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    await setDoc(doc(giderRef), {
+      aciklama: aciklama,
+      duzenleme: duzenlemeTarihi.$d,
+      kategori: kategori,
+      odeme: odendi,
+      tutar: tutar,
+    });
+    setLoading(false);
+  };
+
   return (
     <Form
       labelCol={{
         span: 14,
       }}
-      wrapperCol={{
-        span: 20,
-      }}
-      layout="inline"
+      layout="horizontal"
       initialValues={{
         size: componentSize,
       }}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
       style={{
-        maxWidth: 600,
+        maxWidth: 850,
       }}
+      onFinish={handleSubmit}
     >
       <Form.Item required="true" label="Açıklama">
-        <Input />
+        <Input onChange={(event) => setAciklama(event.target.value)} />
       </Form.Item>
       <Form.Item required="true" label="Kategori">
-        <Select>
+        <Select onChange={(value, event) => setKategori(value)}>
           <Select.Option value="Asansör Bakımı">Asansör Bakımı</Select.Option>
           <Select.Option value="Demirbaş">Demirbaş</Select.Option>
           <Select.Option value="Elektrik">Elektrik</Select.Option>
@@ -51,15 +70,23 @@ const GiderForm = () => {
       </Form.Item>
 
       <Form.Item required="true" label="Düzenleme Tarihi">
-        <DatePicker />
+        <DatePicker
+          placeholder="Tarih Seçiniz"
+          onChange={(value, event) => setDuzenlemeTarihi(value)}
+        />
       </Form.Item>
       <Form.Item required="true" label="Tutar">
-        <InputNumber />
+        <InputNumber onChange={(value, event) => setTutar(value)} />
       </Form.Item>
-      <Form.Item required="true" label="Ödendi" valuePropName="checked">
-        <Switch />
+      <Form.Item label="Ödendi" valuePropName="checked">
+        <Switch onChange={(value, event) => setOdendi(value)} />
       </Form.Item>
-      <Form.Item>
+      <Form.Item
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Button loading={loading} type="primary" htmlType="submit">
           Gider Ekle
         </Button>

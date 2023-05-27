@@ -33,6 +33,18 @@ const Gider = () => {
         return data;
       });
       setGiderler(docs);
+      setGiderler((prevGiderler) =>
+        prevGiderler.map((gider) => {
+          const updatedGider = {
+            ...gider,
+            duzenleme: new Date(
+              gider.duzenleme.seconds * 1000
+            ).toLocaleDateString(),
+          };
+          return updatedGider;
+        })
+      );
+
       console.log(docs);
     })();
   }, []);
@@ -47,6 +59,9 @@ const Gider = () => {
       title: "Düzenleme",
       dataIndex: "duzenleme",
       key: "duzenleme",
+      sorter: (a, b) => new Date(a.duzenleme) - new Date(b.duzenleme),
+      sortDirections: ["ascend", "descend"],
+      showSorterTooltip: false,
     },
     {
       title: "Kategori",
@@ -57,20 +72,27 @@ const Gider = () => {
       title: "Ödeme",
       dataIndex: "odeme",
       key: "odeme",
+      render: (_, { odeme }) => {
+        let color = odeme ? "green" : "red";
+        let name = odeme ? "ÖDENDİ" : "ÖDENMEDİ";
+        return (
+          <Tag color={color} key={odeme}>
+            {name}
+          </Tag>
+        );
+      },
     },
     {
       title: "Tutar",
       dataIndex: "tutar",
       key: "tutar",
+      sorter: (a, b) => a.tutar - b.tutar,
+      sortDirections: ["ascend", "descend"],
+      showSorterTooltip: false,
     },
   ];
 
   return (
-    // <div className="giderTablo">
-    //   {giderler.map((aidat) => (
-    //     <GiderTablo key={aidat.id} props={aidat} />
-    //   ))}
-    // </div>
     <>
       <Table dataSource={giderler} columns={columns} />
       <GiderForm />
