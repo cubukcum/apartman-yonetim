@@ -4,12 +4,14 @@ import { db } from "../firebaseConfig";
 import { collection, doc, setDoc } from "firebase/firestore";
 import "./register.css";
 
-const kullaciRef = collection(db, "kullanicilar");
+const kullaciRef = collection(db, "hesaplar");
 
 const Register = () => {
   const [yoneticiAdi, setYoneticiAdi] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [bagliDaire, setBagliDaire] = useState(0);
+
   const n = useNavigate();
 
   useEffect(() => {
@@ -26,9 +28,10 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     await setDoc(doc(kullaciRef, username), {
-      Ad: yoneticiAdi,
-      Sifre: password,
-      yoneticiMi: true,
+      hesapAdi: yoneticiAdi,
+      sifre: password,
+      hesapTipi: "Yönetici",
+      bagliDaire: bagliDaire,
     });
     localStorage.setItem("username", username);
     localStorage.setItem("yonetici", true);
@@ -42,15 +45,23 @@ const Register = () => {
         <input
           required
           type="text"
-          placeholder="Yonetici Adi"
+          placeholder="Yonetici Adı"
           onChange={(event) => {
             setYoneticiAdi(event.target.value);
           }}
         />
         <input
           required
+          type="number"
+          placeholder="Bağlı Daire"
+          onChange={(event) => {
+            setBagliDaire(event.target.value);
+          }}
+        />
+        <input
+          required
           type="text"
-          placeholder="Kullanici Adi"
+          placeholder="Kullanıcı Adı"
           onChange={(event) => {
             setUserName(event.target.value);
           }}
@@ -58,7 +69,7 @@ const Register = () => {
         <input
           required
           type="password"
-          placeholder="Sifre"
+          placeholder="şifre"
           onChange={(event) => {
             setPassword(event.target.value);
           }}

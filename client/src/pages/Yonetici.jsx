@@ -87,7 +87,7 @@ const Yonetici = () => {
       <div className={kasa >= 0 ? "pozitif" : "negatif"}>
         Güncel Kasa Durumu: {kasa}
       </div>
-      {/* <PieChart data={{ tahsil, odenecek, kasa }} /> */}
+      {/* <PieChart tahsil={tahsil} odenecek={odenecek} kasa={kasa} /> */}
     </div>
   );
 };

@@ -10,10 +10,7 @@ const Login = () => {
   const n = useNavigate();
 
   useEffect(() => {
-    if (
-      localStorage.getItem("username") &&
-      localStorage.getItem("yoneticiMi")
-    ) {
+    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
       n("/");
     } else if (localStorage.getItem("username")) {
       n("/sakin");
@@ -23,14 +20,14 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const docRef = doc(db, "kullanicilar", username);
+    const docRef = doc(db, "hesaplar", username);
 
     try {
       const docSnap = await getDoc(docRef);
-      if (docSnap.exists() && docSnap.data().Sifre === password) {
+      if (docSnap.exists() && docSnap.data().sifre === parseInt(password)) {
         console.log("Giris Basarili");
 
-        if (docSnap.data().yoneticiMi === true) {
+        if (docSnap.data().hesapTipi === "Yönetici") {
           localStorage.setItem("username", username);
           localStorage.setItem("yonetici", true);
           n("/");
@@ -41,6 +38,8 @@ const Login = () => {
         }
       } else {
         console.log("Kullanici Adi Bulunmuyor");
+        console.log(typeof username);
+        console.log(typeof password);
       }
     } catch (error) {
       console.log(error);

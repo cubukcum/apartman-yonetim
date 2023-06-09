@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
 import { db } from "../firebaseConfig";
-import { useState } from "react";
-import { collection, setDoc, doc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { collection, setDoc, doc, addDoc, getDocs } from "firebase/firestore";
 
 const hesapRef = collection(db, "hesaplar");
 
@@ -11,6 +11,42 @@ const HesapForm = () => {
   const [hesapTipi, setHesapTipi] = useState("Kat Maliki");
   const [bagliDaire, setBagliDaire] = useState("");
   const [loading, setLoading] = useState(false);
+  const [randomNumber, setRandomNumber] = useState(null);
+  const [generatedNumbers, setGeneratedNumbers] = useState([]);
+
+  useEffect(() => {
+    fetchGeneratedNumbers();
+  }, []);
+
+  const fetchGeneratedNumbers = async () => {
+    const querySnapshot = await getDocs(collection(db, "randomNumbers"));
+    const numbers = [];
+    querySnapshot.forEach((doc) => {
+      numbers.push(doc.data().number);
+    });
+    setGeneratedNumbers(numbers);
+  };
+
+  const generateRandomNumber = async () => {
+    let newNumber;
+    do {
+      const min = 10000;
+      const max = 99999;
+      newNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    } while (generatedNumbers.includes(newNumber));
+
+    setRandomNumber(newNumber);
+
+    try {
+      await addDoc(collection(db, "randomNumbers"), {
+        number: newNumber,
+      });
+      setGeneratedNumbers([...generatedNumbers, newNumber]);
+      return newNumber;
+    } catch (error) {
+      console.log("Error saving generated number:", error);
+    }
+  };
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -19,20 +55,23 @@ const HesapForm = () => {
     console.log(bagliDaire);
   };
 
-  const generateRandomNumber = () => {
-    const min = 10000;
-    const max = 99999;
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+  //   const generateRandomNumber = () => {
+  //     const min = 10000;
+  //     const max = 99999;
+  //     return Math.floor(Math.random() * (max - min + 1)) + min;
+  //   };
 
   const handleSubmit = async (e) => {
+    const number1 = await generateRandomNumber();
+    const number2 = await generateRandomNumber();
+
     setLoading(true);
-    await setDoc(doc(hesapRef), {
+    await setDoc(doc(hesapRef, number1.toString()), {
       bagliDaire: bagliDaire,
       hesapAdi: hesapAdi,
       hesapTipi: hesapTipi,
-      kullaniciNo: generateRandomNumber(),
-      sifre: generateRandomNumber(),
+      //   kullaniciNo: generateRandomNumber(),
+      sifre: number2,
     });
     setLoading(false);
   };

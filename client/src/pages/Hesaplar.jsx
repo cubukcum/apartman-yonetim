@@ -91,11 +91,13 @@ const Hesaplar = () => {
       title: "Bağlı Daire",
       dataIndex: "bagliDaire",
       key: "bagliDaire",
+      defaultSortOrder: "ascend",
+      sorter: (a, b) => a.bagliDaire - b.bagliDaire,
     },
     {
       title: "Kullanıcı No",
-      dataIndex: "kullaniciNo",
-      key: "kullaniciNo",
+      dataIndex: "id",
+      key: "id",
     },
     {
       title: "Şifre",
