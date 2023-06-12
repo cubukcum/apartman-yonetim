@@ -1,5 +1,4 @@
 import { Card, Col, Row } from "antd";
-import { useEffect } from "react";
 
 const SakinBilgi = (props) => {
   console.log(props.aidat);
@@ -18,12 +17,7 @@ const SakinBilgi = (props) => {
     <Row gutter={16}>
       <Col span={8}>
         <Card title="Ödenmemiş Borçlar" bordered={false}>
-          {odenmemisBorclar()}
-        </Card>
-      </Col>
-      <Col span={8}>
-        <Card title="Geçiken Borçlar" bordered={false}>
-          Card content
+          {odenmemisBorclar()}₺
         </Card>
       </Col>
       <Col span={8}>

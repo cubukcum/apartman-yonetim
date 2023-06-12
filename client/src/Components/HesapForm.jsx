@@ -101,33 +101,6 @@ const HesapForm = () => {
     setLoading(false);
   };
 
-  //   const daireSayisiHesapla = () => {
-  //     if (!waitingD && !waitingH) {
-  //       const secenekler = [];
-  //       const doluDaireler = [];
-  //       for (let j = 0; j < hesaplar.length; j++) {
-  //         doluDaireler.push(parseInt(hesaplar[j].bagliDaire));
-  //       }
-  //       console.log(doluDaireler, "dolu dairler burda");
-  //       for (let i = 1; i <= toplamDaire[0].daireSayisi; i++) {
-  //         if (doluDaireler.includes(i)) {
-  //           secenekler.push(
-  //             <Select.Option disabled key={i} value={i.toString()}>
-  //               {i}
-  //             </Select.Option>
-  //           );
-  //         } else {
-  //           secenekler.push(
-  //             <Select.Option key={i} value={i.toString()}>
-  //               {i}
-  //             </Select.Option>
-  //           );
-  //         }
-  //       }
-  //       return secenekler;
-  //     }
-  //   };
-
   const daireSayisiHesapla = useMemo(() => {
     if (!waitingD && !waitingH) {
       const secenekler = [];

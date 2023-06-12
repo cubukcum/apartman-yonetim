@@ -28,8 +28,6 @@ const Register = () => {
 
   const daireleriOlustur = async (daireSayisi) => {
     try {
-      //   const collectionRef = db.collection("daireler");
-      //   await collectionRef.add({ daireSayisi });
       await addDoc(collection(db, "daireler"), { daireSayisi });
       console.log("daireler koleksiyonu olusturuldu");
     } catch (error) {

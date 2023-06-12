@@ -3,10 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 import "./yonetici.css";
-import PieChart from "../Components/PieChart";
+import DuyuruEkle from "../Components/DuyuruEkle";
+import Duyurular from "../Components/Duyurular";
 
 const Yonetici = () => {
   const n = useNavigate();
+  const [guncelle, setGuncelle] = useState(false);
+
+  const duyuruGuncelle = () => {
+    setGuncelle((onceki) => !onceki);
+  };
 
   useEffect(() => {
     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
@@ -80,6 +86,8 @@ const Yonetici = () => {
 
   return (
     <div className="genelBakis">
+      <DuyuruEkle duyuruGuncelle={duyuruGuncelle} />
+      <Duyurular guncelle={guncelle} />
       <h2>Genel Bakış</h2>
 
       <div className="tahsil">Tahsil edilecek toplam tutar: {tahsil}</div>

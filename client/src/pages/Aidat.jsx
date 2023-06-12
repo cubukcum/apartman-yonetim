@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import AidatForm from "../Components/AidatForm";
 
 import { Space, Table, Tag } from "antd";
-
-const aidatRef = collection(db, "aidatlar");
 
 const Aidat = () => {
   const n = useNavigate();

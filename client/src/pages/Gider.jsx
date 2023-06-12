@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import { Space, Table, Tag } from "antd";
+import { Table, Tag } from "antd";
 import GiderForm from "../Components/GiderForm";
 
 const Gider = () => {

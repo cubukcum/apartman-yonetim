@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SakinBilgi from "../Components/SakinBilgi";
-import SakinTakvim from "../Components/SakinTakvim";
-import SakinDuyurular from "../Components/SakinDuyurular";
+import Duyurular from "../Components/Duyurular";
 import { db } from "../firebaseConfig";
-import { collection, getDocs, where, query } from "firebase/firestore";
-import { Button } from "antd";
+import { collection, getDocs } from "firebase/firestore";
 
 const Sakin = () => {
   const n = useNavigate();
@@ -43,17 +41,11 @@ const Sakin = () => {
     })();
   }, []);
 
-  const handleClick = () => {
-    console.log(aidatlar);
-  };
-
   return (
     <div>
-      <Button onClick={handleClick} />
       <h2>Güncel Durum</h2>
       <SakinBilgi aidat={aidatlar} />
-      <SakinTakvim />
-      <SakinDuyurular />
+      <Duyurular />
     </div>
   );
 };
