@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
 import { db } from "../firebaseConfig";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { collection, setDoc, doc, addDoc, getDocs } from "firebase/firestore";
 
 const hesapRef = collection(db, "hesaplar");
@@ -13,9 +13,48 @@ const HesapForm = () => {
   const [loading, setLoading] = useState(false);
   const [randomNumber, setRandomNumber] = useState(null);
   const [generatedNumbers, setGeneratedNumbers] = useState([]);
+  const [toplamDaire, setToplamDaire] = useState([]);
+  const [hesaplar, setHesaplar] = useState([]);
+  const [waitingD, setWaitingD] = useState(true);
+  const [waitingH, setWaitingH] = useState(true);
 
   useEffect(() => {
     fetchGeneratedNumbers();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const colRef = collection(db, "daireler");
+
+      const snapshots = await getDocs(colRef);
+
+      const docs = snapshots.docs.map((doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        return data;
+      });
+      setToplamDaire(docs);
+      console.log(docs, " this is the daire sayisi");
+      console.log("daire sayisi gelmiyor");
+      setWaitingD(false);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const colRef = collection(db, "hesaplar");
+
+      const snapshots = await getDocs(colRef);
+
+      const docs = snapshots.docs.map((doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        return data;
+      });
+      setHesaplar(docs);
+      console.log(docs);
+      setWaitingH(false);
+    })();
   }, []);
 
   const fetchGeneratedNumbers = async () => {
@@ -48,19 +87,6 @@ const HesapForm = () => {
     }
   };
 
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-    console.log(hesapAdi);
-    console.log(hesapTipi);
-    console.log(bagliDaire);
-  };
-
-  //   const generateRandomNumber = () => {
-  //     const min = 10000;
-  //     const max = 99999;
-  //     return Math.floor(Math.random() * (max - min + 1)) + min;
-  //   };
-
   const handleSubmit = async (e) => {
     const number1 = await generateRandomNumber();
     const number2 = await generateRandomNumber();
@@ -70,11 +96,62 @@ const HesapForm = () => {
       bagliDaire: bagliDaire,
       hesapAdi: hesapAdi,
       hesapTipi: hesapTipi,
-      //   kullaniciNo: generateRandomNumber(),
       sifre: number2,
     });
     setLoading(false);
   };
+
+  //   const daireSayisiHesapla = () => {
+  //     if (!waitingD && !waitingH) {
+  //       const secenekler = [];
+  //       const doluDaireler = [];
+  //       for (let j = 0; j < hesaplar.length; j++) {
+  //         doluDaireler.push(parseInt(hesaplar[j].bagliDaire));
+  //       }
+  //       console.log(doluDaireler, "dolu dairler burda");
+  //       for (let i = 1; i <= toplamDaire[0].daireSayisi; i++) {
+  //         if (doluDaireler.includes(i)) {
+  //           secenekler.push(
+  //             <Select.Option disabled key={i} value={i.toString()}>
+  //               {i}
+  //             </Select.Option>
+  //           );
+  //         } else {
+  //           secenekler.push(
+  //             <Select.Option key={i} value={i.toString()}>
+  //               {i}
+  //             </Select.Option>
+  //           );
+  //         }
+  //       }
+  //       return secenekler;
+  //     }
+  //   };
+
+  const daireSayisiHesapla = useMemo(() => {
+    if (!waitingD && !waitingH) {
+      const secenekler = [];
+      const doluDaireler = hesaplar.map((hesap) => parseInt(hesap.bagliDaire));
+      console.log(doluDaireler, "dolu daireler burda");
+      for (let i = 1; i <= toplamDaire[0].daireSayisi; i++) {
+        if (doluDaireler.includes(i)) {
+          secenekler.push(
+            <Select.Option disabled key={i} value={i.toString()}>
+              {i}
+            </Select.Option>
+          );
+        } else {
+          secenekler.push(
+            <Select.Option key={i} value={i.toString()}>
+              {i}
+            </Select.Option>
+          );
+        }
+      }
+      return secenekler;
+    }
+    return null;
+  }, [waitingD, waitingH, toplamDaire, hesaplar]);
 
   return (
     <Form
@@ -111,16 +188,7 @@ const HesapForm = () => {
 
       <Form.Item label="Bağlı Daire">
         <Select onSelect={(value, event) => setBagliDaire(value)}>
-          <Select.Option value="1">1</Select.Option>
-          <Select.Option value="2">2</Select.Option>
-          <Select.Option value="3">3</Select.Option>
-          <Select.Option value="4">4</Select.Option>
-          <Select.Option value="5">5</Select.Option>
-          <Select.Option value="6">6</Select.Option>
-          <Select.Option value="7">7</Select.Option>
-          <Select.Option value="8">8</Select.Option>
-          <Select.Option value="9">9</Select.Option>
-          <Select.Option value="10">10</Select.Option>
+          {daireSayisiHesapla}
         </Select>
       </Form.Item>
 

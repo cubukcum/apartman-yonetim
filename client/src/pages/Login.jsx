@@ -34,6 +34,7 @@ const Login = () => {
         } else {
           localStorage.setItem("username", username);
           localStorage.setItem("yonetici", false);
+          localStorage.setItem("hesapAdi", docSnap.data().hesapAdi);
           n("/sakin");
         }
       } else {

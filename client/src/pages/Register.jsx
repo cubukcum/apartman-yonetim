@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import "./register.css";
 
 const kullaciRef = collection(db, "hesaplar");
@@ -11,6 +11,7 @@ const Register = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [bagliDaire, setBagliDaire] = useState(0);
+  const [toplamDaire, setToplamDaire] = useState(0);
 
   const n = useNavigate();
 
@@ -25,14 +26,27 @@ const Register = () => {
     }
   });
 
+  const daireleriOlustur = async (daireSayisi) => {
+    try {
+      //   const collectionRef = db.collection("daireler");
+      //   await collectionRef.add({ daireSayisi });
+      await addDoc(collection(db, "daireler"), { daireSayisi });
+      console.log("daireler koleksiyonu olusturuldu");
+    } catch (error) {
+      console.log("koleksiyon olusturulamadi hata var!!!", error);
+    }
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
+    const intDaireSayisi = parseInt(toplamDaire, 10);
     await setDoc(doc(kullaciRef, username), {
       hesapAdi: yoneticiAdi,
       sifre: password,
       hesapTipi: "Yönetici",
       bagliDaire: bagliDaire,
     });
+    daireleriOlustur(intDaireSayisi);
     localStorage.setItem("username", username);
     localStorage.setItem("yonetici", true);
     n("/");
@@ -56,6 +70,14 @@ const Register = () => {
           placeholder="Bağlı Daire"
           onChange={(event) => {
             setBagliDaire(event.target.value);
+          }}
+        />
+        <input
+          required
+          type="number"
+          placeholder="Toplam Daire"
+          onChange={(event) => {
+            setToplamDaire(event.target.value);
           }}
         />
         <input
