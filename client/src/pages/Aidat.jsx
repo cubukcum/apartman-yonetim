@@ -14,14 +14,14 @@ const Aidat = () => {
     setGuncelle((prevGuncelle) => !prevGuncelle);
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
-    } else if (localStorage.getItem("username")) {
-      n("/sakin");
-    } else {
-      n("/login");
-    }
-  });
+  //   useEffect(() => {
+  //     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
+  //     } else if (localStorage.getItem("username")) {
+  //       n("/sakin");
+  //     } else {
+  //       n("/login");
+  //     }
+  //   });
 
   const [aidatlar, setAidatlar] = useState([]);
 
@@ -92,6 +92,19 @@ const Aidat = () => {
       showSorterTooltip: false,
     },
   ];
+
+  const username = localStorage.getItem("username");
+  const yonetici = localStorage.getItem("yonetici");
+  if (!username || yonetici !== "true") {
+    // If localStorage.getItem("username") doesn't exist or localStorage.getItem("yonetici") is not "true"
+    // Navigate to the appropriate page
+    if (username) {
+      n("/sakin");
+    } else {
+      n("/login");
+    }
+    return null; // Return null to prevent rendering the component
+  }
 
   return (
     <>

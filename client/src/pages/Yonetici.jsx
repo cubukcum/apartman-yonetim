@@ -15,6 +15,7 @@ const Yonetici = () => {
   };
 
   useEffect(() => {
+    console.log(localStorage.getItem("yonetici"));
     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
     } else if (localStorage.getItem("username")) {
       n("/sakin");
