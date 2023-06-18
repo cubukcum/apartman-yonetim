@@ -28,6 +28,7 @@ const DuyuruEkle = (props) => {
   return (
     <>
       <Input
+        className="duyuruBasligi"
         placeholder="Duyuru Başlığı"
         onChange={(event) => {
           setBaslik(event.target.value);
@@ -36,6 +37,8 @@ const DuyuruEkle = (props) => {
         required={true}
       />
       <TextArea
+        className="duyuruIcerigi"
+        placeholder="Sayın Site Sakinleri..."
         rows={4}
         maxLength={100}
         onChange={(event) => {
@@ -44,6 +47,7 @@ const DuyuruEkle = (props) => {
         value={aciklama}
       />
       <Button
+        className="duyuruButonu"
         loading={loading}
         type="primary"
         htmlType="submit"

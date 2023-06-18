@@ -52,7 +52,7 @@ const Register = () => {
 
   return (
     <div className="registerContainer">
-      <h1>Register</h1>
+      <h1>Kayıt Ol</h1>
       <form>
         <input
           required
@@ -95,9 +95,8 @@ const Register = () => {
           }}
         />
         <button onClick={handleRegister}>Kaydol</button>
-        <p> Bu bir hatadir!</p>
         <span>
-          Hesabiniz var mi? <Link to="/login"> Giris Yap </Link>{" "}
+          Hesabınız var mı? <Link to="/login"> Giriş Yap </Link>
         </span>
       </form>
     </div>

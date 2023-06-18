@@ -11,7 +11,7 @@ import Sakin from "./pages/Sakin";
 
 function App() {
   return (
-    <>
+    <div className="appContainer">
       <Navbar />
       <Routes>
         <Route path="/" element={<Yonetici />} />
@@ -22,7 +22,7 @@ function App() {
         <Route path="/hesaplar" element={<Hesaplar />} />
         <Route path="/sakin" element={<Sakin />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

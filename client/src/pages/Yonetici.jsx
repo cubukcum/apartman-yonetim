@@ -42,7 +42,6 @@ const Yonetici = () => {
         return data;
       });
       setAidatlar(docs);
-      console.log(docs);
     })();
   }, []);
 
@@ -58,7 +57,6 @@ const Yonetici = () => {
         return data;
       });
       setGiderler(docs);
-      console.log(docs);
     })();
   }, []);
 
@@ -77,7 +75,6 @@ const Yonetici = () => {
       if (giderler[j].odeme) {
         setKasa((prevKasa) => prevKasa - parseInt(giderler[j].tutar));
       } else {
-        console.log(giderler[j]);
         setOdenecek(
           (prevOdenecek) => prevOdenecek + parseInt(giderler[j].tutar)
         );
@@ -89,14 +86,11 @@ const Yonetici = () => {
     <div className="genelBakis">
       <DuyuruEkle duyuruGuncelle={duyuruGuncelle} />
       <Duyurular guncelle={guncelle} />
-      <h2>Genel Bakış</h2>
-
       <div className="tahsil">Tahsil edilecek toplam tutar: {tahsil}</div>
       <div className="odenecek">Ödenecek toplam tutar: {odenecek} </div>
       <div className={kasa >= 0 ? "pozitif" : "negatif"}>
         Güncel Kasa Durumu: {kasa}
       </div>
-      {/* <PieChart tahsil={tahsil} odenecek={odenecek} kasa={kasa} /> */}
     </div>
   );
 };

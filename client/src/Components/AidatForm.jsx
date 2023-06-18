@@ -48,6 +48,7 @@ const AidatForm = ({ aidatEklendi }) => {
 
   return (
     <Form
+      className="aidatForm"
       labelCol={{
         span: 10,
       }}

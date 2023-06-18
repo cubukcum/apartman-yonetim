@@ -10,16 +10,21 @@ const Gider = () => {
   const [giderler, setGiderler] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
-      console.log("basarili");
-    } else if (localStorage.getItem("username")) {
-      console.log("Sakin Girisi Basarili");
-      n("/sakin");
-    } else {
-      console.log("yanlis yerdesins");
-      n(-1);
-    }
-  });
+    const checkUser = () => {
+      const username = localStorage.getItem("username");
+      const yonetici = localStorage.getItem("yonetici");
+
+      if (!username || yonetici !== "true") {
+        if (username) {
+          n("/sakin");
+        } else {
+          n("/login");
+        }
+      }
+    };
+
+    checkUser();
+  }, [n]);
 
   useEffect(() => {
     (async () => {
@@ -44,8 +49,6 @@ const Gider = () => {
           return updatedGider;
         })
       );
-
-      console.log(docs);
     })();
   }, []);
 

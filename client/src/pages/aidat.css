@@ -1,0 +1,7 @@
+.aidatContainer {
+  height: 92vh;
+  width: 100%;
+}
+.aidatContainer .aidatForm {
+  background-color: white;
+}

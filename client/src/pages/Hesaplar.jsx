@@ -11,16 +11,21 @@ const Hesaplar = () => {
   const [aidatlar, setAidatlar] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
-      console.log("basarili");
-    } else if (localStorage.getItem("username")) {
-      console.log("Sakin Girisi Basarili");
-      n("/sakin");
-    } else {
-      console.log("yanlis yerdesins");
-      n(-1);
-    }
-  });
+    const checkUser = () => {
+      const username = localStorage.getItem("username");
+      const yonetici = localStorage.getItem("yonetici");
+
+      if (!username || yonetici !== "true") {
+        if (username) {
+          n("/sakin");
+        } else {
+          n("/login");
+        }
+      }
+    };
+
+    checkUser();
+  }, [n]);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +39,6 @@ const Hesaplar = () => {
         return data;
       });
       setHesaplar(docs);
-      console.log(docs);
     })();
   }, []);
 
@@ -51,9 +55,29 @@ const Hesaplar = () => {
       });
       docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
       setAidatlar(docs);
-      console.log(docs);
     })();
   }, []);
+
+  //   useEffect(() => {
+  //     for (let i = 0; i < hesaplar.length; i++) {
+  //       let bakiye = 0;
+  //       for (let j = 0; j < aidatlar.length; j++) {
+  //         if (
+  //           aidatlar[j].hesap === hesaplar[i].hesapAdi &&
+  //           aidatlar[j].odeme === false
+  //         ) {
+  //           bakiye = bakiye + aidatlar[j].tutar;
+  //           setHesaplar((prevHesaplar) =>
+  //             prevHesaplar.map((hesap) =>
+  //               hesap.hesapAdi === hesaplar[i].hesapAdi
+  //                 ? { ...hesap, bakiye: bakiye }
+  //                 : hesap
+  //             )
+  //           );
+  //         }
+  //       }
+  //     }
+  //   }, [aidatlar]);
 
   useEffect(() => {
     for (let i = 0; i < hesaplar.length; i++) {
@@ -64,16 +88,16 @@ const Hesaplar = () => {
           aidatlar[j].odeme === false
         ) {
           bakiye = bakiye + aidatlar[j].tutar;
-          setHesaplar((prevHesaplar) =>
-            prevHesaplar.map((hesap) =>
-              hesap.hesapAdi === hesaplar[i].hesapAdi
-                ? { ...hesap, bakiye: bakiye }
-                : hesap
-            )
-          );
         }
       }
+      const updatedHesaplar = hesaplar.map((hesap) =>
+        hesap.hesapAdi === hesaplar[i].hesapAdi
+          ? { ...hesap, bakiye: bakiye }
+          : hesap
+      );
+      setHesaplar(updatedHesaplar);
     }
+    // eslint-disable-next-line
   }, [aidatlar]);
 
   const columns = [
@@ -111,9 +135,6 @@ const Hesaplar = () => {
     },
   ];
 
-  console.log("son check");
-  console.log(hesaplar);
-  console.log("en son check");
   return (
     <>
       <Table dataSource={hesaplar} columns={columns} />

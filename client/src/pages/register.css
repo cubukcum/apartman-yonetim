@@ -3,25 +3,28 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 92vh;
   width: 100%;
-  background-color: #b9e7e7;
+  background-color: #ffdc33;
 }
 .registerContainer h1 {
   font-size: 20px;
-  color: teal;
-  margin-bottom: 20px;
+  font-style: italic;
+  margin: 5px;
+  color: rgb(0, 0, 0);
 }
 .registerContainer form {
+  border-radius: 150px;
   display: flex;
   flex-direction: column;
   padding: 50px;
-  background-color: white;
+  background-color: #ffd816;
   width: 200px;
   gap: 20px;
 }
 .registerContainer input {
   padding: 10px;
+  background-color: #ffd816;
   border: none;
   border-bottom: 1px solid gray;
 }
@@ -29,7 +32,8 @@
 .registerContainer button {
   padding: 10px;
   border: none;
-  background-color: teal;
+  /* background-color: teal; */
+  background-color: #000000;
   cursor: pointer;
   color: white;
 }

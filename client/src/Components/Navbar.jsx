@@ -44,36 +44,41 @@ const Navbar = () => {
       </a>
       <ul className={active}>
         {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" && (
+          currentUrl !== "http://localhost:3000/sakin" &&
+          currentUrl !== "http://localhost:3000/register" && (
             <li className="nav-item">
               <Link to="/"> Home </Link>
             </li>
           )}
         {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" && (
+          currentUrl !== "http://localhost:3000/sakin" &&
+          currentUrl !== "http://localhost:3000/register" && (
             <li className="nav-item">
               <Link to="/aidat"> Aidat </Link>
             </li>
           )}
         {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" && (
+          currentUrl !== "http://localhost:3000/sakin" &&
+          currentUrl !== "http://localhost:3000/register" && (
             <li className="nav-item">
               <Link to="/gider"> Gider </Link>
             </li>
           )}
         {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" && (
+          currentUrl !== "http://localhost:3000/sakin" &&
+          currentUrl !== "http://localhost:3000/register" && (
             <li className="nav-item">
               <Link to="/hesaplar"> Hesaplar </Link>
             </li>
           )}
-        {currentUrl !== "http://localhost:3000/login" && (
-          <li className="nav-item">
-            <a onClick={handleLogout} className="nav-link">
-              LogOut
-            </a>
-          </li>
-        )}
+        {currentUrl !== "http://localhost:3000/login" &&
+          currentUrl !== "http://localhost:3000/register" && (
+            <li className="nav-item">
+              <a onClick={handleLogout} className="nav-link">
+                LogOut
+              </a>
+            </li>
+          )}
       </ul>
       <div onClick={navToggle} className={toggleIcon}>
         <div className="line1"></div>

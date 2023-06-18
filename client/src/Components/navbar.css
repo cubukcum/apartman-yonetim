@@ -10,7 +10,8 @@ li {
 a {
   cursor: pointer;
   text-decoration: none;
-  color: darkgray;
+  color: black;
+  /* color: darkgray; */
 }
 link {
   cursor: pointer;
@@ -22,7 +23,8 @@ link {
   align-items: center;
   justify-content: space-around;
   height: 8vh;
-  background: #1a044f;
+  background: #ffdc33;
+  /* background: #1a044f; */
 }
 .nav-brand {
   text-transform: uppercase;

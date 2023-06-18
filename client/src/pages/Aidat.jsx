@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import AidatForm from "../Components/AidatForm";
-
-import { Space, Table, Tag } from "antd";
+import "./aidat.css";
+import { Table, Tag } from "antd";
 
 const Aidat = () => {
   const n = useNavigate();
@@ -14,15 +14,22 @@ const Aidat = () => {
     setGuncelle((prevGuncelle) => !prevGuncelle);
   };
 
-  //   useEffect(() => {
-  //     if (localStorage.getItem("username") && localStorage.getItem("yonetici")) {
-  //     } else if (localStorage.getItem("username")) {
-  //       n("/sakin");
-  //     } else {
-  //       n("/login");
-  //     }
-  //   });
+  useEffect(() => {
+    const checkUser = () => {
+      const username = localStorage.getItem("username");
+      const yonetici = localStorage.getItem("yonetici");
 
+      if (!username || yonetici !== "true") {
+        if (username) {
+          n("/sakin");
+        } else {
+          n("/login");
+        }
+      }
+    };
+
+    checkUser();
+  }, [n]);
   const [aidatlar, setAidatlar] = useState([]);
 
   useEffect(() => {
@@ -48,8 +55,6 @@ const Aidat = () => {
           return updatedAidat;
         })
       );
-
-      console.log(docs);
     })();
   }, [guncelle]);
 
@@ -93,24 +98,11 @@ const Aidat = () => {
     },
   ];
 
-  const username = localStorage.getItem("username");
-  const yonetici = localStorage.getItem("yonetici");
-  if (!username || yonetici !== "true") {
-    // If localStorage.getItem("username") doesn't exist or localStorage.getItem("yonetici") is not "true"
-    // Navigate to the appropriate page
-    if (username) {
-      n("/sakin");
-    } else {
-      n("/login");
-    }
-    return null; // Return null to prevent rendering the component
-  }
-
   return (
-    <>
+    <div className="aidatContainer">
       <Table dataSource={aidatlar} columns={columns} />
       <AidatForm aidatEklendi={aidatEklendi} />
-    </>
+    </div>
   );
 };
 

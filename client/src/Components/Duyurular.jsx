@@ -23,9 +23,10 @@ const Duyurular = (props) => {
   }, [props?.guncelle]);
 
   return (
-    <Card title="Duyurular">
+    <Card className="duyuruContainer" title="Duyurular">
       {duyurular?.map((duyuru) => (
         <Card
+          className="duyuruBox"
           key={duyuru.id}
           type="inner"
           title={

@@ -7,6 +7,7 @@ import "./login.css";
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [basarisiz, setBasarisiz] = useState(false);
   const n = useNavigate();
 
   useEffect(() => {
@@ -38,9 +39,7 @@ const Login = () => {
           n("/sakin");
         }
       } else {
-        console.log("Kullanici Adi Bulunmuyor");
-        console.log(typeof username);
-        console.log(typeof password);
+        setBasarisiz(true);
       }
     } catch (error) {
       console.log(error);
@@ -49,12 +48,12 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
-      <h1 className="loginBaslik">Login</h1>
+      <h1 className="loginBaslik">Giriş</h1>
       <form>
         <input
           required
           type="text"
-          placeholder="Kullanici Adi"
+          placeholder="Kullanıcı Adı"
           onChange={(event) => {
             setUserName(event.target.value);
           }}
@@ -62,15 +61,15 @@ const Login = () => {
         <input
           required
           type="password"
-          placeholder="Sifre"
+          placeholder="Şifre"
           onChange={(event) => {
             setPassword(event.target.value);
           }}
         />
         <button onClick={handleLogin}>Giris</button>
-        <p> Bu bir hatadir!</p>
+        {basarisiz && <p> Kullanıcı Adı veya Şifre hatalı!</p>}
         <span>
-          Hesabiniz yok ise kaydolun? <Link to="/register"> Kaydol </Link>{" "}
+          Hesabınız yok ise kaydolun? <Link to="/register"> Kaydol </Link>
         </span>
       </form>
     </div>
