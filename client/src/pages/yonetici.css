@@ -12,7 +12,7 @@
   color: aqua;
 }
 .genelBakis div {
-  color: #4d16cc;
+  color: #000000;
 }
 
 .genelBakis .pozitif {
@@ -30,14 +30,14 @@
   margin: 10px;
   width: 20%;
   border-width: 2px;
-  background-color: #ffdc33;
+  background-color: #ffffff;
 }
 .genelBakis .duyuruIcerigi {
   margin: 10px;
   margin-bottom: 0px;
   width: 60%;
   border-width: 2px;
-  background-color: #ffdc33;
+  background-color: #ffffff;
 }
 
 .genelBakis .duyuruButonu {
@@ -45,5 +45,5 @@
 }
 
 .genelBakis .duyuruContainer {
-  background-color: #ffdc33;
+  background-color: #ffffff;
 }

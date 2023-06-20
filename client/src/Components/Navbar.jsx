@@ -75,7 +75,7 @@ const Navbar = () => {
           currentUrl !== "http://localhost:3000/register" && (
             <li className="nav-item">
               <a onClick={handleLogout} className="nav-link">
-                LogOut
+                Çıkış Yap
               </a>
             </li>
           )}

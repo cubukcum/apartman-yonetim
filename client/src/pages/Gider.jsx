@@ -4,6 +4,7 @@ import { db } from "../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { Table, Tag } from "antd";
 import GiderForm from "../Components/GiderForm";
+import "./gider.css";
 
 const Gider = () => {
   const n = useNavigate();
@@ -96,10 +97,10 @@ const Gider = () => {
   ];
 
   return (
-    <>
+    <div className="giderContainer">
       <Table dataSource={giderler} columns={columns} />
       <GiderForm />
-    </>
+    </div>
   );
 };
 

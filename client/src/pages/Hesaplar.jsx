@@ -4,6 +4,7 @@ import { db } from "../firebaseConfig";
 import HesapForm from "../Components/HesapForm";
 import { Table } from "antd";
 import { collection, getDocs } from "firebase/firestore";
+import "./hesaplar.css";
 
 const Hesaplar = () => {
   const n = useNavigate();
@@ -58,27 +59,6 @@ const Hesaplar = () => {
     })();
   }, []);
 
-  //   useEffect(() => {
-  //     for (let i = 0; i < hesaplar.length; i++) {
-  //       let bakiye = 0;
-  //       for (let j = 0; j < aidatlar.length; j++) {
-  //         if (
-  //           aidatlar[j].hesap === hesaplar[i].hesapAdi &&
-  //           aidatlar[j].odeme === false
-  //         ) {
-  //           bakiye = bakiye + aidatlar[j].tutar;
-  //           setHesaplar((prevHesaplar) =>
-  //             prevHesaplar.map((hesap) =>
-  //               hesap.hesapAdi === hesaplar[i].hesapAdi
-  //                 ? { ...hesap, bakiye: bakiye }
-  //                 : hesap
-  //             )
-  //           );
-  //         }
-  //       }
-  //     }
-  //   }, [aidatlar]);
-
   useEffect(() => {
     for (let i = 0; i < hesaplar.length; i++) {
       let bakiye = 0;
@@ -97,7 +77,6 @@ const Hesaplar = () => {
       );
       setHesaplar(updatedHesaplar);
     }
-    // eslint-disable-next-line
   }, [aidatlar]);
 
   const columns = [
@@ -136,10 +115,10 @@ const Hesaplar = () => {
   ];
 
   return (
-    <>
+    <div className="hesaplarContainer">
       <Table dataSource={hesaplar} columns={columns} />
       <HesapForm />
-    </>
+    </div>
   );
 };
 

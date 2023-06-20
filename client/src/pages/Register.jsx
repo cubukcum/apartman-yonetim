@@ -89,7 +89,7 @@ const Register = () => {
         <input
           required
           type="password"
-          placeholder="şifre"
+          placeholder="Şifre"
           onChange={(event) => {
             setPassword(event.target.value);
           }}
