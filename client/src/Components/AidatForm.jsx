@@ -49,35 +49,43 @@ const AidatForm = ({ aidatEklendi }) => {
   return (
     <Form
       className="aidatForm"
-      labelCol={{
-        span: 10,
-      }}
-      layout="inline"
+      layout="horizontal"
       initialValues={{
         size: componentSize,
       }}
       onValuesChange={onFormLayoutChange}
       size={componentSize}
       style={{
-        maxWidth: 800,
+        maxWidth: "70%",
       }}
       onFinish={handleSubmit}
     >
-      <Form.Item required="true" label="Açıklama">
-        <Input onChange={(event) => setAciklama(event.target.value)} />
+      <Form.Item>
+        <Input
+          placeholder="Açıklama"
+          onChange={(event) => setAciklama(event.target.value)}
+        />
       </Form.Item>
 
-      <Form.Item required="true" label="Düzenleme Tarihi">
+      <Form.Item>
         <DatePicker
           placeholder="Tarih Seçiniz"
           onChange={(value) => setDuzenlemeTarihi(value)}
         />
       </Form.Item>
-      <Form.Item required="true" label="Tutar">
-        <InputNumber onChange={(value, event) => setTutar(value)} />
+      <Form.Item>
+        <InputNumber
+          placeholder="Tutar"
+          onChange={(value, event) => setTutar(value)}
+        />
       </Form.Item>
       <Form.Item>
-        <Button loading={loading} type="primary" htmlType="submit">
+        <Button
+          style={{ background: "#ffdc33", color: "black" }}
+          loading={loading}
+          type="primary"
+          htmlType="submit"
+        >
           Aidat Ekle
         </Button>
       </Form.Item>

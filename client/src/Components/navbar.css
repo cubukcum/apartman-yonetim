@@ -1,9 +1,3 @@
-/* *,
-*::after,
-*::before {
-  margin: 0;
-  box-sizing: border-box;
-} */
 li {
   list-style: none;
 }
@@ -24,6 +18,7 @@ link {
   justify-content: space-around;
   height: 8vh;
   background: #ffdc33;
+  z-index: 1;
   /* background: #1a044f; */
 }
 .nav-brand {
@@ -35,6 +30,7 @@ link {
   align-items: center;
   justify-content: space-around;
   gap: 3rem;
+  z-index: 2;
 }
 .nav-toggler div {
   width: 2.5rem;
@@ -53,14 +49,16 @@ link {
   }
   .nav-menu {
     position: fixed;
-    top: 7vh;
+    top: 8vh;
     right: 0;
-    width: 50%;
-    height: 93vh;
-    background: #1a044f;
+    width: 30%;
+    height: 92vh;
+    background: #fae57f;
+    align-items: center;
     flex-direction: column;
     transform: translateX(100%);
     transition: 0.5s ease-in;
+    z-index: 2;
   }
 }
 

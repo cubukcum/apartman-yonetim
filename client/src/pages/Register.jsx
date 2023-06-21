@@ -10,6 +10,7 @@ const Register = () => {
   const [yoneticiAdi, setYoneticiAdi] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [apartmanAdi, setApartmanAdi] = useState("");
   const [bagliDaire, setBagliDaire] = useState(0);
   const [toplamDaire, setToplamDaire] = useState(0);
 
@@ -26,10 +27,13 @@ const Register = () => {
     }
   });
 
-  const daireleriOlustur = async (daireSayisi) => {
+  const apartmanOlustur = async (daireSayisi, apartmanAdi) => {
     try {
-      await addDoc(collection(db, "daireler"), { daireSayisi });
-      console.log("daireler koleksiyonu olusturuldu");
+      await addDoc(collection(db, "apartmanBilgisi"), {
+        daireSayisi,
+        apartmanAdi,
+      });
+      console.log("apartman koleksiyonu olusturuldu");
     } catch (error) {
       console.log("koleksiyon olusturulamadi hata var!!!", error);
     }
@@ -44,7 +48,7 @@ const Register = () => {
       hesapTipi: "Yönetici",
       bagliDaire: bagliDaire,
     });
-    daireleriOlustur(intDaireSayisi);
+    apartmanOlustur(intDaireSayisi, apartmanAdi);
     localStorage.setItem("username", username);
     localStorage.setItem("yonetici", true);
     n("/");
@@ -54,6 +58,14 @@ const Register = () => {
     <div className="registerContainer">
       <h1>Kayıt Ol</h1>
       <form>
+        <input
+          required
+          type="text"
+          placeholder="Apartman / Site Adı"
+          onChange={(event) => {
+            setApartmanAdi(event.target.value);
+          }}
+        />
         <input
           required
           type="text"
@@ -86,6 +98,7 @@ const Register = () => {
             setUserName(event.target.value);
           }}
         />
+
         <input
           required
           type="password"

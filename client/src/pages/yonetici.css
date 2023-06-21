@@ -1,12 +1,13 @@
 .genelBakis {
-  height: 92vh;
+  height: auto;
+  min-height: 92vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   font-size: 40px;
   align-items: center;
 
-  background-color: white;
+  background-color: #fff9c4;
 }
 .genelBakis h2 {
   color: aqua;
@@ -17,14 +18,6 @@
 
 .genelBakis .pozitif {
   color: green;
-}
-.genelBakis .negatif {
-  color: rgb(255, 86, 86);
-}
-.negatif:hover {
-  cursor: none;
-  color: red;
-  text-shadow: 5px 5px 30px;
 }
 .genelBakis .duyuruBasligi {
   margin: 10px;
@@ -42,8 +35,19 @@
 
 .genelBakis .duyuruButonu {
   margin: 5px;
+  background: #ffdc33;
+  color: black;
 }
-
+.genelBakis .duyuruButonu:hover {
+  color: #000000;
+  background-color: #ffdc33;
+}
 .genelBakis .duyuruContainer {
-  background-color: #ffffff;
+  background-color: #fff9c4;
+}
+.genelBakis .vitrin {
+  margin: 10px;
+  height: 160px;
+  width: 600px;
+  background: #ffd500;
 }

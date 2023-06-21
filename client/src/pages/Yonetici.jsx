@@ -5,7 +5,7 @@ import { db } from "../firebaseConfig";
 import "./yonetici.css";
 import DuyuruEkle from "../Components/DuyuruEkle";
 import Duyurular from "../Components/Duyurular";
-
+import Vitrin from "../Components/Vitrin";
 const Yonetici = () => {
   const n = useNavigate();
   const [guncelle, setGuncelle] = useState(false);
@@ -84,13 +84,11 @@ const Yonetici = () => {
 
   return (
     <div className="genelBakis">
+      <div className="vitrin">
+        <Vitrin tahsil={tahsil} odenecek={odenecek} kasa={kasa} />
+      </div>
       <DuyuruEkle duyuruGuncelle={duyuruGuncelle} />
       <Duyurular guncelle={guncelle} />
-      <div className="tahsil">Tahsil edilecek toplam tutar: {tahsil}</div>
-      <div className="odenecek">Ödenecek toplam tutar: {odenecek} </div>
-      <div className={kasa >= 0 ? "pozitif" : "negatif"}>
-        Güncel Kasa Durumu: {kasa}
-      </div>
     </div>
   );
 };

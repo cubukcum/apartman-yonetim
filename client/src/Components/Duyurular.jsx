@@ -17,6 +17,8 @@ const Duyurular = (props) => {
         data.id = doc.id;
         return data;
       });
+      docs.sort((a, b) => a.tarih - b.tarih);
+
       setDuyurular(docs);
       console.log(docs);
     })();

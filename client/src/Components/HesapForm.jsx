@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Radio, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import { db } from "../firebaseConfig";
 import { useState, useEffect, useMemo } from "react";
 import { collection, setDoc, doc, addDoc, getDocs } from "firebase/firestore";
@@ -11,7 +11,6 @@ const HesapForm = () => {
   const [hesapTipi, setHesapTipi] = useState("Kat Maliki");
   const [bagliDaire, setBagliDaire] = useState("");
   const [loading, setLoading] = useState(false);
-  const [randomNumber, setRandomNumber] = useState(null);
   const [generatedNumbers, setGeneratedNumbers] = useState([]);
   const [toplamDaire, setToplamDaire] = useState([]);
   const [hesaplar, setHesaplar] = useState([]);
@@ -24,7 +23,7 @@ const HesapForm = () => {
 
   useEffect(() => {
     (async () => {
-      const colRef = collection(db, "daireler");
+      const colRef = collection(db, "apartmanBilgisi");
 
       const snapshots = await getDocs(colRef);
 
@@ -34,8 +33,6 @@ const HesapForm = () => {
         return data;
       });
       setToplamDaire(docs);
-      console.log(docs, " this is the daire sayisi");
-      console.log("daire sayisi gelmiyor");
       setWaitingD(false);
     })();
   }, []);
@@ -52,7 +49,6 @@ const HesapForm = () => {
         return data;
       });
       setHesaplar(docs);
-      console.log(docs);
       setWaitingH(false);
     })();
   }, []);
@@ -73,9 +69,6 @@ const HesapForm = () => {
       const max = 99999;
       newNumber = Math.floor(Math.random() * (max - min + 1)) + min;
     } while (generatedNumbers.includes(newNumber));
-
-    setRandomNumber(newNumber);
-
     try {
       await addDoc(collection(db, "randomNumbers"), {
         number: newNumber,
@@ -105,8 +98,7 @@ const HesapForm = () => {
     if (!waitingD && !waitingH) {
       const secenekler = [];
       const doluDaireler = hesaplar.map((hesap) => parseInt(hesap.bagliDaire));
-      console.log(doluDaireler, "dolu daireler burda");
-      for (let i = 1; i <= toplamDaire[0].daireSayisi; i++) {
+      for (let i = 1; i <= toplamDaire[0]?.daireSayisi; i++) {
         if (doluDaireler.includes(i)) {
           secenekler.push(
             <Select.Option disabled key={i} value={i.toString()}>
@@ -128,45 +120,51 @@ const HesapForm = () => {
 
   return (
     <Form
-      labelCol={{
-        span: 40,
-      }}
-      wrapperCol={{
-        span: 14,
-      }}
+      className="hesapForm"
       layout="horizontal"
       initialValues={{
         size: componentSize,
       }}
       size={componentSize}
       style={{
-        maxWidth: 600,
+        maxWidth: "60%",
       }}
       onFinish={handleSubmit}
     >
       <Form.Item
-        label="Hesap Adı"
+        required="true"
         onChange={(event) => {
           setHesapAdi(event.target.value);
         }}
       >
-        <Input />
+        <Input placeholder="Hesap Adı" />
       </Form.Item>
-      <Form.Item label="Hesap Tipi">
-        <Select onSelect={(value, event) => setHesapTipi(value)}>
+      <Form.Item>
+        <Select
+          placeholder="Hesap Tipi"
+          onSelect={(value, event) => setHesapTipi(value)}
+        >
           <Select.Option value="Kat Maliki">Kat Maliki</Select.Option>
           <Select.Option value="Kiracı">Kiracı</Select.Option>
         </Select>
       </Form.Item>
 
-      <Form.Item label="Bağlı Daire">
-        <Select onSelect={(value, event) => setBagliDaire(value)}>
+      <Form.Item>
+        <Select
+          placeholder="Bağlı Daire"
+          onSelect={(value, event) => setBagliDaire(value)}
+        >
           {daireSayisiHesapla}
         </Select>
       </Form.Item>
 
       <Form.Item>
-        <Button loading={loading} type="primary" htmlType="submit">
+        <Button
+          style={{ background: "#ffdc33", color: "black" }}
+          loading={loading}
+          type="primary"
+          htmlType="submit"
+        >
           Hesap Ekle
         </Button>
       </Form.Item>

@@ -3,5 +3,10 @@
   width: 100%;
 }
 .aidatContainer .aidatForm {
-  background-color: white;
+  margin-left: 15%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-top: 2px dashed #fae57f;
 }

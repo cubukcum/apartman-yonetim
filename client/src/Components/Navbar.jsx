@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebaseConfig";
+import { getDocs, collection } from "firebase/firestore";
 import "./navbar.css";
 
 const Navbar = () => {
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
   const [currentUrl, setCurrentUrl] = useState("");
+  const [apartmanAdi, setApartmanAdi] = useState("");
 
   useEffect(() => {
     setCurrentUrl(window.location.href);
@@ -20,6 +23,21 @@ const Navbar = () => {
       window.removeEventListener("popstate", handleUrlChange);
     };
   }, [window.location.href]);
+
+  useEffect(() => {
+    (async () => {
+      const colRef = collection(db, "apartmanBilgisi");
+
+      const snapshots = await getDocs(colRef);
+
+      const docs = snapshots.docs.map((doc) => {
+        const data = doc.data();
+        data.id = doc.id;
+        return data;
+      });
+      setApartmanAdi(docs);
+    })();
+  }, []);
 
   const navToggle = () => {
     active === "nav-menu"
@@ -36,11 +54,13 @@ const Navbar = () => {
     localStorage.clear();
     n("/login");
   };
-  console.log(currentUrl);
   return (
     <nav className="nav">
       <a href="" className="nav-brand">
-        adakale
+        {currentUrl !== "http://localhost:3000/login" &&
+        currentUrl !== "http://localhost:3000/register"
+          ? apartmanAdi[0]?.apartmanAdi
+          : "Apartman Yönetim Sistemi"}
       </a>
       <ul className={active}>
         {currentUrl !== "http://localhost:3000/login" &&

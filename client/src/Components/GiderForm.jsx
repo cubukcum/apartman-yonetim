@@ -27,7 +27,7 @@ const GiderForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    setLoading(true);
+    setLoading(!loading);
     await setDoc(doc(giderRef), {
       aciklama: aciklama,
       duzenleme: duzenlemeTarihi.$d,
@@ -35,13 +35,14 @@ const GiderForm = () => {
       odeme: odendi,
       tutar: tutar,
     });
-    setLoading(false);
+    setLoading(!loading);
   };
 
   return (
     <Form
+      className="giderForm"
       labelCol={{
-        span: 14,
+        span: 30,
       }}
       layout="horizontal"
       initialValues={{
@@ -50,16 +51,28 @@ const GiderForm = () => {
       onValuesChange={onFormLayoutChange}
       size={componentSize}
       style={{
-        maxWidth: 850,
+        maxWidth: "80%",
       }}
       onFinish={handleSubmit}
     >
-      <Form.Item required="true" label="Açıklama">
-        <Input onChange={(event) => setAciklama(event.target.value)} />
+      <Form.Item
+        name="aciklama"
+        rules={[{ required: true, message: "Açıklama giriniz" }]}
+      >
+        <Input
+          placeholder="Açıklama"
+          onChange={(event) => setAciklama(event.target.value)}
+        />
       </Form.Item>
-      <Form.Item required="true" label="Kategori">
-        <Select onChange={(value, event) => setKategori(value)}>
-          <Select.Option value="Asansör Bakımı">Asansör Bakımı</Select.Option>
+      <Form.Item
+        name="kategori"
+        rules={[{ required: true, message: "Kategori seçiniz" }]}
+      >
+        <Select
+          placeholder="Kategori"
+          onChange={(value, event) => setKategori(value)}
+        >
+          <Select.Option value="Asansör Bakımı">Asansör</Select.Option>
           <Select.Option value="Demirbaş">Demirbaş</Select.Option>
           <Select.Option value="Elektrik">Elektrik</Select.Option>
           <Select.Option value="Personel">Personel</Select.Option>
@@ -69,17 +82,29 @@ const GiderForm = () => {
         </Select>
       </Form.Item>
 
-      <Form.Item required="true" label="Düzenleme Tarihi">
+      <Form.Item
+        name="tarih"
+        rules={[{ required: true, message: "Tarihi seçiniz" }]}
+      >
         <DatePicker
           placeholder="Tarih Seçiniz"
           onChange={(value, event) => setDuzenlemeTarihi(value)}
         />
       </Form.Item>
-      <Form.Item required="true" label="Tutar">
-        <InputNumber onChange={(value, event) => setTutar(value)} />
+      <Form.Item
+        name="tutar"
+        rules={[{ required: true, message: "Tutar giriniz" }]}
+      >
+        <InputNumber
+          placeholder="Tutar"
+          onChange={(value, event) => setTutar(value)}
+        />
       </Form.Item>
-      <Form.Item label="Ödendi" valuePropName="checked">
+      <Form.Item valuePropName="checked">
         <Switch onChange={(value, event) => setOdendi(value)} />
+        <h4 style={{ color: odendi ? "green" : "red" }}>
+          {odendi ? "Ödendi" : "Ödenmedi"}
+        </h4>
       </Form.Item>
       <Form.Item
         style={{
@@ -87,7 +112,12 @@ const GiderForm = () => {
           justifyContent: "center",
         }}
       >
-        <Button loading={loading} type="primary" htmlType="submit">
+        <Button
+          style={{ background: "#ffdc33", color: "black" }}
+          loading={loading}
+          type="primary"
+          htmlType="submit"
+        >
           Gider Ekle
         </Button>
       </Form.Item>

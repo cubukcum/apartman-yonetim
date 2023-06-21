@@ -20,11 +20,6 @@ const SakinBilgi = (props) => {
           {odenmemisBorclar()}₺
         </Card>
       </Col>
-      <Col span={8}>
-        <Card title="Card title" bordered={false}>
-          Card content
-        </Card>
-      </Col>
     </Row>
   );
 };
