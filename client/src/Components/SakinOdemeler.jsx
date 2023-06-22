@@ -1,20 +1,44 @@
-import { Timeline } from "antd";
-const SakinOdemeler = () => (
-  <Timeline
-    items={[
-      {
-        children: "Create a services site 2015-09-01",
-      },
-      {
-        children: "Solve initial network problems 2015-09-01",
-      },
-      {
-        children: "Technical testing 2015-09-01",
-      },
-      {
-        children: "Network problems being solved 2015-09-01",
-      },
-    ]}
-  />
-);
+import { Button, Timeline } from "antd";
+import { db } from "../firebaseConfig";
+import { doc, updateDoc } from "firebase/firestore";
+import { useState } from "react";
+
+const SakinOdemeler = (props) => {
+  const [loading, setLoading] = useState(false);
+
+  const odemeYap = async (aidatId) => {
+    try {
+      setLoading(true);
+      const docRef = doc(db, "aidatlar", aidatId);
+      await updateDoc(docRef, { odeme: true });
+      props?.aidatGuncelle();
+      setLoading(false);
+    } catch (error) {
+      console.error("Error updating document field:", error);
+    }
+  };
+  return (
+    <div className="sakinOdemeler">
+      <Timeline>
+        {props.aidatlar.map((aidat, index) => (
+          <Timeline.Item key={aidat.id} color={aidat.odeme ? "green" : "red"}>
+            {aidat.aciklama} - Tutar: {aidat.tutar}₺ -{"  "}
+            {aidat.odeme ? (
+              "Ödendi"
+            ) : (
+              <Button
+                className="sakinOdemeButonu"
+                loading={loading}
+                onClick={() => odemeYap(aidat.id)}
+              >
+                Öde
+              </Button>
+            )}
+          </Timeline.Item>
+        ))}
+      </Timeline>
+    </div>
+  );
+};
+
 export default SakinOdemeler;

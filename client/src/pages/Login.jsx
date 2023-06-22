@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import "./login.css";
-
+import { LoginOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +49,13 @@ const Login = () => {
 
   return (
     <div className="loginContainer">
-      <h1 className="loginBaslik">Giriş</h1>
+      <Avatar
+        style={{
+          backgroundColor: "#ffd816",
+          color: "black",
+        }}
+        icon={<LoginOutlined />}
+      ></Avatar>
       <form>
         <input
           required

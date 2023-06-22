@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../firebaseConfig";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { UserAddOutlined } from "@ant-design/icons";
+import { Avatar } from "antd";
 import "./register.css";
 
 const kullaciRef = collection(db, "hesaplar");
@@ -56,7 +58,15 @@ const Register = () => {
 
   return (
     <div className="registerContainer">
-      <h1>Kayıt Ol</h1>
+      <Avatar
+        style={{
+          backgroundColor: "#ffd816",
+          color: "black",
+        }}
+        icon={<UserAddOutlined />}
+      >
+        Register
+      </Avatar>
       <form>
         <input
           required

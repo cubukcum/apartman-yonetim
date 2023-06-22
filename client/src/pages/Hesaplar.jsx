@@ -10,6 +10,11 @@ const Hesaplar = () => {
   const n = useNavigate();
   const [hesaplar, setHesaplar] = useState([]);
   const [aidatlar, setAidatlar] = useState([]);
+  const [guncelle, setGuncelle] = useState(false);
+
+  const hesapGuncelle = () => {
+    setGuncelle((onceki) => !onceki);
+  };
 
   useEffect(() => {
     const checkUser = () => {
@@ -41,7 +46,7 @@ const Hesaplar = () => {
       });
       setHesaplar(docs);
     })();
-  }, []);
+  }, [guncelle]);
 
   useEffect(() => {
     (async () => {
@@ -117,7 +122,7 @@ const Hesaplar = () => {
   return (
     <div className="hesaplarContainer">
       <Table dataSource={hesaplar} columns={columns} />
-      <HesapForm />
+      <HesapForm hesapGuncelle={hesapGuncelle} />
     </div>
   );
 };

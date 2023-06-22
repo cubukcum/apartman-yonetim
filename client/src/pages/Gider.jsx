@@ -10,11 +10,16 @@ const Gider = () => {
   const n = useNavigate();
   const [giderler, setGiderler] = useState([]);
 
+  const [guncelle, setGuncelle] = useState(false);
+
+  const giderGuncelle = () => {
+    setGuncelle((onceki) => !onceki);
+  };
+
   useEffect(() => {
     const checkUser = () => {
       const username = localStorage.getItem("username");
       const yonetici = localStorage.getItem("yonetici");
-
       if (!username || yonetici !== "true") {
         if (username) {
           n("/sakin");
@@ -51,7 +56,7 @@ const Gider = () => {
         })
       );
     })();
-  }, []);
+  }, [guncelle]);
 
   const columns = [
     {
@@ -99,7 +104,7 @@ const Gider = () => {
   return (
     <div className="giderContainer">
       <Table dataSource={giderler} columns={columns} />
-      <GiderForm />
+      <GiderForm giderGuncelle={giderGuncelle} />
     </div>
   );
 };

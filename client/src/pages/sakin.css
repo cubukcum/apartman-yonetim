@@ -1,0 +1,28 @@
+.sakin {
+  height: 92vh;
+  width: 100%;
+  background-color: #fff9c4;
+}
+.sakin h2 {
+  text-align: center;
+  padding: 20px;
+}
+.sakin .sakinOdemeler {
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+.sakin .sakinOdemeler .sakinOdemeButonu {
+  margin: 5px;
+  background: #ffdc33;
+  color: black;
+}
+.sakin .duyuruContainer {
+  background-color: #fff9c4;
+}
+.sakin h4 {
+  text-align: center;
+  font-style: italic;
+  padding: 20px;
+}

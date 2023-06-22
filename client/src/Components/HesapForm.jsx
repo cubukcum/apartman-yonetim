@@ -5,7 +5,7 @@ import { collection, setDoc, doc, addDoc, getDocs } from "firebase/firestore";
 
 const hesapRef = collection(db, "hesaplar");
 
-const HesapForm = () => {
+const HesapForm = (props) => {
   const [componentSize, setComponentSize] = useState("middle");
   const [hesapAdi, setHesapAdi] = useState("");
   const [hesapTipi, setHesapTipi] = useState("Kat Maliki");
@@ -92,6 +92,7 @@ const HesapForm = () => {
       sifre: number2,
     });
     setLoading(false);
+    props?.hesapGuncelle();
   };
 
   const daireSayisiHesapla = useMemo(() => {

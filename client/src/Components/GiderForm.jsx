@@ -13,7 +13,7 @@ import { setDoc, doc, collection } from "firebase/firestore";
 
 const giderRef = collection(db, "giderler");
 
-const GiderForm = () => {
+const GiderForm = (props) => {
   const [componentSize, setComponentSize] = useState("default");
   const [loading, setLoading] = useState(false);
   const [duzenlemeTarihi, setDuzenlemeTarihi] = useState();
@@ -27,7 +27,7 @@ const GiderForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    setLoading(!loading);
+    setLoading(true);
     await setDoc(doc(giderRef), {
       aciklama: aciklama,
       duzenleme: duzenlemeTarihi.$d,
@@ -35,7 +35,8 @@ const GiderForm = () => {
       odeme: odendi,
       tutar: tutar,
     });
-    setLoading(!loading);
+    setLoading(false);
+    props?.giderGuncelle();
   };
 
   return (
