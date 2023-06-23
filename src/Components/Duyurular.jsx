@@ -20,7 +20,6 @@ const Duyurular = (props) => {
       docs.sort((a, b) => a.tarih - b.tarih);
 
       setDuyurular(docs);
-      console.log(docs);
     })();
   }, [props?.guncelle]);
 
