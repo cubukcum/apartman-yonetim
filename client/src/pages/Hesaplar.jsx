@@ -62,7 +62,7 @@ const Hesaplar = () => {
       docs.sort((a, b) => a.hesap.localeCompare(b.hesap));
       setAidatlar(docs);
     })();
-  }, []);
+  }, [guncelle]);
 
   useEffect(() => {
     for (let i = 0; i < hesaplar.length; i++) {
@@ -75,14 +75,16 @@ const Hesaplar = () => {
           bakiye = bakiye + aidatlar[j].tutar;
         }
       }
-      const updatedHesaplar = hesaplar.map((hesap) =>
-        hesap.hesapAdi === hesaplar[i].hesapAdi
-          ? { ...hesap, bakiye: bakiye }
-          : hesap
-      );
-      setHesaplar(updatedHesaplar);
+      setHesaplar((prevHesaplar) => {
+        const updatedHesaplar = prevHesaplar.map((hesap) =>
+          hesap.hesapAdi === hesaplar[i].hesapAdi
+            ? { ...hesap, bakiye: bakiye }
+            : hesap
+        );
+        return updatedHesaplar;
+      });
     }
-  }, [aidatlar]);
+  }, [aidatlar, guncelle]);
 
   const columns = [
     {
@@ -118,7 +120,6 @@ const Hesaplar = () => {
       key: "bakiye",
     },
   ];
-
   return (
     <div className="hesaplarContainer">
       <Table dataSource={hesaplar} columns={columns} />

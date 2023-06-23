@@ -33,14 +33,16 @@ const AidatForm = ({ aidatEklendi }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
     for (let i = 0; i < hesaplar.length; i++) {
-      const isim = hesaplar[i].hesapAdi;
-      await setDoc(doc(aidatRef), {
-        aciklama: aciklama,
-        duzenleme: duzenlemeTarihi.$d,
-        hesap: isim,
-        odeme: false,
-        tutar: tutar,
-      });
+      if (hesaplar[i].hesapTipi !== "Yönetici") {
+        const isim = hesaplar[i].hesapAdi;
+        await setDoc(doc(aidatRef), {
+          aciklama: aciklama,
+          duzenleme: duzenlemeTarihi.$d,
+          hesap: isim,
+          odeme: false,
+          tutar: tutar,
+        });
+      }
     }
     aidatEklendi();
     setLoading(false);

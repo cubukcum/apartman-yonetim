@@ -38,6 +38,9 @@
   background: #ffdc33;
   color: black;
 }
+.genelBakis .duyuruBox {
+  margin: 5px;
+}
 .genelBakis .duyuruButonu:hover {
   color: #000000;
   background-color: #ffdc33;
