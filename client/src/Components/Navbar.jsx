@@ -57,42 +57,42 @@ const Navbar = () => {
   return (
     <nav className="nav">
       <a href="" className="nav-brand">
-        {currentUrl !== "http://localhost:3000/login" &&
-        currentUrl !== "http://localhost:3000/register"
+        {currentUrl !== `${window.location.origin}/login` &&
+        currentUrl !== `${window.location.origin}/register`
           ? apartmanAdi[0]?.apartmanAdi
           : "Apartman Yönetim Sistemi"}
       </a>
       <ul className={active}>
-        {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" &&
-          currentUrl !== "http://localhost:3000/register" && (
+        {currentUrl !== `${window.location.origin}/login` &&
+          currentUrl !== `${window.location.origin}/sakin` &&
+          currentUrl !== `${window.location.origin}/register` && (
             <li className="nav-item">
               <Link to="/"> Home </Link>
             </li>
           )}
-        {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" &&
-          currentUrl !== "http://localhost:3000/register" && (
+        {currentUrl !== `${window.location.origin}/login` &&
+          currentUrl !== `${window.location.origin}/sakin` &&
+          currentUrl !== `${window.location.origin}/register` && (
             <li className="nav-item">
               <Link to="/aidat"> Aidat </Link>
             </li>
           )}
-        {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" &&
-          currentUrl !== "http://localhost:3000/register" && (
+        {currentUrl !== `${window.location.origin}/login` &&
+          currentUrl !== `${window.location.origin}/sakin` &&
+          currentUrl !== `${window.location.origin}/register` && (
             <li className="nav-item">
               <Link to="/gider"> Gider </Link>
             </li>
           )}
-        {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/sakin" &&
-          currentUrl !== "http://localhost:3000/register" && (
+        {currentUrl !== `${window.location.origin}/login` &&
+          currentUrl !== `${window.location.origin}/sakin` &&
+          currentUrl !== `${window.location.origin}/register` && (
             <li className="nav-item">
               <Link to="/hesaplar"> Hesaplar </Link>
             </li>
           )}
-        {currentUrl !== "http://localhost:3000/login" &&
-          currentUrl !== "http://localhost:3000/register" && (
+        {currentUrl !== `${window.location.origin}/login` &&
+          currentUrl !== `${window.location.origin}/register` && (
             <li className="nav-item">
               <a onClick={handleLogout} className="nav-link">
                 Çıkış Yap
